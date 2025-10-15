@@ -6,8 +6,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Components\RatingField;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class ReviewForm
@@ -27,12 +26,16 @@ class ReviewForm
                             ->label('Nama Pelanggan')
                             ->required()
                             ->maxLength(255),
-                        RatingField::make('rating')
+                        Select::make('rating')
                             ->label('Rating')
-                            ->required()
-                            ->min(1)
-                            ->max(5)
-                            ->stars(5),
+                            ->options([
+                                1 => '1',
+                                2 => '2',
+                                3 => '3',
+                                4 => '4',
+                                5 => '5',
+                            ])
+                            ->required(),
                         Select::make('status')
                             ->label('Status')
                             ->options([

@@ -66,6 +66,6 @@ class UmkmProfilesTable
                     DeleteBulkAction::make(),
                 ]),
             ])
-            ->defaultSort('created_at', 'desc');
+            ->defaultSort('created_at', 'asc');
     }
 }

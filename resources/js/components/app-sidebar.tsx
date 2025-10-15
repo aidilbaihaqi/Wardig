@@ -11,34 +11,10 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
-import dashboardRoutes from '@/routes/dashboard';
-import { type NavItem } from '@/types';
-import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid, Store, Package, MessageSquare } from 'lucide-react';
+import { type NavItem, type SharedData } from '@/types';
+import { Link, usePage } from '@inertiajs/react';
+import { BookOpen, Folder, LayoutGrid, Shield } from 'lucide-react';
 import AppLogo from './app-logo';
-
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: dashboard(),
-        icon: LayoutGrid,
-    },
-    {
-        title: 'UMKM',
-        href: dashboardRoutes.umkm.index(),
-        icon: Store,
-    },
-    {
-        title: 'Products',
-        href: dashboardRoutes.products.index(),
-        icon: Package,
-    },
-    {
-        title: 'Reviews',
-        href: dashboardRoutes.reviews.index(),
-        icon: MessageSquare,
-    },
-];
 
 const footerNavItems: NavItem[] = [
     {
@@ -54,6 +30,20 @@ const footerNavItems: NavItem[] = [
 ];
 
 export function AppSidebar() {
+    const { auth } = usePage<SharedData>().props;
+
+    const mainNavItems: NavItem[] = [
+        {
+            title: 'Dashboard',
+            href: dashboard(),
+            icon: LayoutGrid,
+        },
+        // Show a single entry to Filament admin panel for admin users.
+        ...(auth?.user?.is_admin
+            ? [{ title: 'Admin Panel', href: '/admin', icon: Shield } satisfies NavItem[]]
+            : []),
+    ];
+
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>

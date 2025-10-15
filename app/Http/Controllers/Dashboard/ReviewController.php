@@ -83,7 +83,7 @@ class ReviewController extends Controller
 
         Review::create($validated);
 
-        return redirect()->route('dashboard.reviews.index')
+        return redirect()->route('admin.reviews.index')
             ->with('success', 'Review created successfully.');
     }
 
@@ -138,7 +138,7 @@ class ReviewController extends Controller
 
         $review->update($validated);
 
-        return redirect()->route('dashboard.reviews.index')
+        return redirect()->route('admin.reviews.index')
             ->with('success', 'Review updated successfully.');
     }
 
@@ -156,7 +156,7 @@ class ReviewController extends Controller
 
         $review->delete();
 
-        return redirect()->route('dashboard.reviews.index')
+        return redirect()->route('admin.reviews.index')
             ->with('success', 'Review deleted successfully.');
     }
 

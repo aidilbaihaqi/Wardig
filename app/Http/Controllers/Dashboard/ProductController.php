@@ -83,7 +83,7 @@ class ProductController extends Controller
             }
         }
 
-        return redirect()->route('dashboard.products.index')
+        return redirect()->route('admin.products.index')
             ->with('success', 'Product created successfully.');
     }
 
@@ -159,7 +159,7 @@ class ProductController extends Controller
             }
         }
 
-        return redirect()->route('dashboard.products.index')
+        return redirect()->route('admin.products.index')
             ->with('success', 'Product updated successfully.');
     }
 
@@ -185,7 +185,7 @@ class ProductController extends Controller
 
         $product->delete();
 
-        return redirect()->route('dashboard.products.index')
+        return redirect()->route('admin.products.index')
             ->with('success', 'Product deleted successfully.');
     }
 

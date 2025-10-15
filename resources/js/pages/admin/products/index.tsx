@@ -79,7 +79,7 @@ export default function ProductsIndex({ products, umkm_profiles, filters }: Prop
     });
 
     const handleFilter = () => {
-        router.get('/dashboard/products', { 
+        router.get('/admin/products', { 
             search: search || undefined, 
             status: status || undefined,
             umkm_id: umkmId || undefined
@@ -92,7 +92,7 @@ export default function ProductsIndex({ products, umkm_profiles, filters }: Prop
 
     const confirmDelete = () => {
         if (deleteDialog.product) {
-            router.delete(`/dashboard/products/${deleteDialog.product.id}`, {
+            router.delete(`/admin/products/${deleteDialog.product.id}`, {
                 onSuccess: () => {
                     setDeleteDialog({ open: false, product: null });
                 }
@@ -101,7 +101,7 @@ export default function ProductsIndex({ products, umkm_profiles, filters }: Prop
     };
 
     const regenerateQrCode = (productId: number) => {
-        router.post(`/dashboard/products/${productId}/regenerate-qr`, {}, {
+        router.post(`/admin/products/${productId}/regenerate-qr`, {}, {
             preserveScroll: true
         });
     };
@@ -131,7 +131,7 @@ export default function ProductsIndex({ products, umkm_profiles, filters }: Prop
                             Manage products and their QR codes
                         </p>
                     </div>
-                    <Link href="/dashboard/products/create">
+                    <Link href="/admin/products/create">
                         <Button className="bg-blue-600 hover:bg-blue-700">
                             <Plus className="w-4 h-4 mr-2" />
                             Add Product
@@ -268,12 +268,12 @@ export default function ProductsIndex({ products, umkm_profiles, filters }: Prop
                                             </div>
                                         </div>
                                         <div className="flex items-center space-x-1">
-                                            <Link href={`/dashboard/products/${product.id}`}>
+                                            <Link href={`/admin/products/${product.id}`}>
                                             <Button variant="ghost" size="sm">
                                                 <Eye className="w-4 h-4" />
                                             </Button>
                                         </Link>
-                                        <Link href={`/dashboard/products/${product.id}/edit`}>
+                                        <Link href={`/admin/products/${product.id}/edit`}>
                                                 <Button variant="ghost" size="sm">
                                                     <Edit className="w-4 h-4" />
                                                 </Button>
@@ -367,7 +367,7 @@ export default function ProductsIndex({ products, umkm_profiles, filters }: Prop
                                 key={page}
                                 variant={page === products.current_page ? "default" : "outline"}
                                 size="sm"
-                                onClick={() => router.get('/dashboard/products', { ...filters, page })}
+                                onClick={() => router.get('/admin/products', { ...filters, page })}
                             >
                                 {page}
                             </Button>
@@ -388,7 +388,7 @@ export default function ProductsIndex({ products, umkm_profiles, filters }: Prop
                                         : "Get started by adding your first product."
                                     }
                                 </p>
-                                <Link href="/dashboard/products/create">
+                                <Link href="/admin/products/create">
                                     <Button className="bg-blue-600 hover:bg-blue-700">
                                         <Plus className="w-4 h-4 mr-2" />
                                         Add First Product

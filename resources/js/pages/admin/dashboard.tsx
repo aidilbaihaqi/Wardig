@@ -252,7 +252,7 @@ export default function AdminDashboard({ stats, recent_activities, scan_analytic
                             <Button 
                                 variant="outline" 
                                 className="h-auto p-4 flex flex-col items-center space-y-2 hover:bg-blue-50 hover:border-blue-200"
-                                onClick={() => window.location.href = '/dashboard/umkm/create'}
+                                onClick={() => window.location.href = '/admin/umkm/create'}
                             >
                                 <Store className="w-6 h-6 text-blue-600" />
                                 <span className="text-sm font-medium">Add UMKM</span>
@@ -261,7 +261,7 @@ export default function AdminDashboard({ stats, recent_activities, scan_analytic
                             <Button 
                                 variant="outline" 
                                 className="h-auto p-4 flex flex-col items-center space-y-2 hover:bg-green-50 hover:border-green-200"
-                                onClick={() => window.location.href = '/dashboard/products/create'}
+                                onClick={() => window.location.href = '/admin/products/create'}
                     >
                         <Package className="w-6 h-6 text-green-600" />
                         <span className="text-sm font-medium">Add Product</span>
@@ -270,7 +270,7 @@ export default function AdminDashboard({ stats, recent_activities, scan_analytic
                     <Button 
                         variant="outline" 
                         className="h-auto p-4 flex flex-col items-center space-y-2 hover:bg-purple-50 hover:border-purple-200"
-                        onClick={() => window.location.href = '/dashboard/reviews'}
+                        onClick={() => window.location.href = '/admin/reviews'}
                     >
                         <MessageSquare className="w-6 h-6 text-purple-600" />
                         <span className="text-sm font-medium">Manage Reviews</span>
@@ -279,7 +279,7 @@ export default function AdminDashboard({ stats, recent_activities, scan_analytic
                     <Button 
                         variant="outline" 
                         className="h-auto p-4 flex flex-col items-center space-y-2 hover:bg-indigo-50 hover:border-indigo-200"
-                        onClick={() => window.location.href = '/dashboard/products'}
+                        onClick={() => window.location.href = '/admin/products'}
                             >
                                 <QrCode className="w-6 h-6 text-indigo-600" />
                                 <span className="text-sm font-medium">QR Codes</span>

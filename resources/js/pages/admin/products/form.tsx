@@ -483,7 +483,7 @@ export default function ProductForm({ product, umkmProfiles }: Props) {
                                                     variant="outline"
                                                     size="sm"
                                                     className="w-full"
-                                                    onClick={() => window.open(`/dashboard/products/${product.id}/qr-code`, '_blank')}
+                                                    onClick={() => window.open(`/admin/products/${product.id}/qr-code`, '_blank')}
                                                 >
                                                     View QR Code
                                                 </Button>

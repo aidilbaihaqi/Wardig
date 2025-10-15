@@ -64,12 +64,12 @@ export default function UmkmForm({ umkm, errors }: Props) {
 
         if (isEditing) {
             formData.append('_method', 'PUT');
-            post(`/dashboard/umkm/${umkm.id}`, {
+            post(`/admin/umkm/${umkm.id}`, {
                 data: formData,
                 forceFormData: true,
             });
         } else {
-            post('/dashboard/umkm', {
+            post('/admin/umkm', {
                 data: formData,
                 forceFormData: true,
             });
@@ -97,7 +97,7 @@ export default function UmkmForm({ umkm, errors }: Props) {
             <div className="space-y-6">
                 {/* Header */}
                 <div className="flex items-center space-x-4">
-                    <Link href="/dashboard/umkm">
+                    <Link href="/admin/umkm">
                         <Button variant="ghost" size="sm">
                             <ArrowLeft className="w-4 h-4 mr-2" />
                             Back to UMKM
@@ -320,7 +320,7 @@ export default function UmkmForm({ umkm, errors }: Props) {
                                             }
                                         </Button>
                                         
-                                        <Link href="/dashboard/umkm" className="block">
+                                        <Link href="/admin/umkm" className="block">
                                             <Button type="button" variant="outline" className="w-full">
                                                 Cancel
                                             </Button>

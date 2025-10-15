@@ -62,7 +62,7 @@ export default function UmkmIndex({ umkm_profiles, filters }: Props) {
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
-        router.get('/dashboard/umkm', { search }, { preserveState: true });
+        router.get('/admin/umkm', { search }, { preserveState: true });
     };
 
     const handleDelete = (umkm: UmkmProfile) => {
@@ -71,7 +71,7 @@ export default function UmkmIndex({ umkm_profiles, filters }: Props) {
 
     const confirmDelete = () => {
         if (deleteDialog.umkm) {
-            router.delete(`/dashboard/umkm/${deleteDialog.umkm.id}`, {
+            router.delete(`/admin/umkm/${deleteDialog.umkm.id}`, {
                 onSuccess: () => {
                     setDeleteDialog({ open: false, umkm: null });
                 }
@@ -100,7 +100,7 @@ export default function UmkmIndex({ umkm_profiles, filters }: Props) {
                             Manage UMKM profiles and their information
                         </p>
                     </div>
-                    <Link href="/dashboard/umkm/create">
+                    <Link href="/admin/umkm/create">
                         <Button className="bg-blue-600 hover:bg-blue-700">
                             <Plus className="w-4 h-4 mr-2" />
                             Add UMKM
@@ -200,12 +200,12 @@ export default function UmkmIndex({ umkm_profiles, filters }: Props) {
                                         </div>
                                     </div>
                                     <div className="flex items-center space-x-2">
-                                        <Link href={`/dashboard/umkm/${umkm.id}`}>
+                                        <Link href={`/admin/umkm/${umkm.id}`}>
                                             <Button variant="ghost" size="sm">
                                                 <Eye className="w-4 h-4" />
                                             </Button>
                                         </Link>
-                                        <Link href={`/dashboard/umkm/${umkm.id}/edit`}>
+                                        <Link href={`/admin/umkm/${umkm.id}/edit`}>
                                             <Button variant="ghost" size="sm">
                                                 <Edit className="w-4 h-4" />
                                             </Button>
@@ -258,7 +258,7 @@ export default function UmkmIndex({ umkm_profiles, filters }: Props) {
                                 key={page}
                                 variant={page === umkm_profiles.current_page ? "default" : "outline"}
                                 size="sm"
-                                onClick={() => router.get('/dashboard/umkm', { ...filters, page })}
+                                onClick={() => router.get('/admin/umkm', { ...filters, page })}
                             >
                                 {page}
                             </Button>
@@ -279,7 +279,7 @@ export default function UmkmIndex({ umkm_profiles, filters }: Props) {
                                         : "Get started by adding your first UMKM profile."
                                     }
                                 </p>
-                                <Link href="/dashboard/umkm/create">
+                                <Link href="/admin/umkm/create">
                                     <Button className="bg-blue-600 hover:bg-blue-700">
                                         <Plus className="w-4 h-4 mr-2" />
                                         Add First UMKM

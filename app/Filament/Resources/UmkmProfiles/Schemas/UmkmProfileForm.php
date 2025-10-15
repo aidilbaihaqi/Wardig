@@ -5,7 +5,7 @@ namespace App\Filament\Resources\UmkmProfiles\Schemas;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Section;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class UmkmProfileForm

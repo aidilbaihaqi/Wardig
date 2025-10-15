@@ -10,6 +10,11 @@ class EditUmkmProfile extends EditRecord
 {
     protected static string $resource = UmkmProfileResource::class;
 
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
+
     protected function getHeaderActions(): array
     {
         return [

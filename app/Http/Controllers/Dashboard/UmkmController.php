@@ -54,7 +54,7 @@ class UmkmController extends Controller
 
         UmkmProfile::create($validated);
 
-        return redirect()->route('dashboard.umkm.index')
+        return redirect()->route('admin.umkm.index')
             ->with('success', 'UMKM profile created successfully.');
     }
 
@@ -108,7 +108,7 @@ class UmkmController extends Controller
 
         $umkm->update($validated);
 
-        return redirect()->route('dashboard.umkm.index')
+        return redirect()->route('admin.umkm.index')
             ->with('success', 'UMKM profile updated successfully.');
     }
 
@@ -124,7 +124,7 @@ class UmkmController extends Controller
 
         $umkm->delete();
 
-        return redirect()->route('dashboard.umkm.index')
+        return redirect()->route('admin.umkm.index')
             ->with('success', 'UMKM profile deleted successfully.');
     }
 }

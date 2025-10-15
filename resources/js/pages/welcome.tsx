@@ -179,26 +179,26 @@ export default function Welcome({
                             
                             <div className="bg-white p-8 rounded-lg shadow-lg">
                                 <h3 className="text-2xl font-bold text-gray-900 mb-4">Manfaat QR Code untuk UMKM</h3>
-                                <ul className="space-y-3">
+                                <ul className="space-y-3 text-gray-900 dark:text-gray-900">
                                     <li className="flex items-center">
                                         <span className="text-green-500 mr-2">✓</span>
-                                        <span>Akses informasi produk secara instant</span>
+                                        <span className="text-gray-900 dark:text-gray-900">Akses informasi produk secara instant</span>
                                     </li>
                                     <li className="flex items-center">
                                         <span className="text-green-500 mr-2">✓</span>
-                                        <span>Mengurangi kontak fisik (contactless)</span>
+                                        <span className="text-gray-900 dark:text-gray-900">Mengurangi kontak fisik (contactless)</span>
                                     </li>
                                     <li className="flex items-center">
                                         <span className="text-green-500 mr-2">✓</span>
-                                        <span>Tracking dan analytics yang akurat</span>
+                                        <span className="text-gray-900 dark:text-gray-900">Tracking dan analytics yang akurat</span>
                                     </li>
                                     <li className="flex items-center">
                                         <span className="text-green-500 mr-2">✓</span>
-                                        <span>Hemat biaya marketing dan promosi</span>
+                                        <span className="text-gray-900 dark:text-gray-900">Hemat biaya marketing dan promosi</span>
                                     </li>
                                     <li className="flex items-center">
                                         <span className="text-green-500 mr-2">✓</span>
-                                        <span>Meningkatkan profesionalitas bisnis</span>
+                                        <span className="text-gray-900 dark:text-gray-900">Meningkatkan profesionalitas bisnis</span>
                                     </li>
                                 </ul>
                             </div>

@@ -7,7 +7,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Section;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Str;
 
@@ -62,14 +62,13 @@ class ProductForm
                         Textarea::make('history')
                             ->label('Sejarah Produk')
                             ->required()
-                            ->rows(4)
-                            ->columnSpanFull(),
+                            ->rows(4),
                         Textarea::make('philosophy')
                             ->label('Filosofi Produk')
                             ->required()
-                            ->rows(4)
-                            ->columnSpanFull(),
-                    ]),
+                            ->rows(4),
+                    ])
+                    ->columns(2),
 
                 Section::make('Media')
                     ->schema([

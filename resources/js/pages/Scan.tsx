@@ -1,5 +1,5 @@
 import { Head, Link } from '@inertiajs/react';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -14,9 +14,46 @@ import {
 } from '@/components/ui/alert';
 import { QrCode, Camera, Upload, AlertTriangle } from 'lucide-react';
 
+type BarcodeFormat =
+  | 'qr_code'
+  | 'aztec'
+  | 'code_128'
+  | 'code_39'
+  | 'code_93'
+  | 'codabar'
+  | 'data_matrix'
+  | 'ean_13'
+  | 'ean_8'
+  | 'itf'
+  | 'pdf417'
+  | 'upc_a'
+  | 'upc_e';
+
+interface DetectedBarcode {
+  rawValue: string;
+}
+
+interface BarcodeDetectorOptions {
+  formats?: BarcodeFormat[];
+}
+
+interface BarcodeDetector {
+  detect(
+    source:
+      | HTMLVideoElement
+      | HTMLImageElement
+      | HTMLCanvasElement
+      | ImageBitmap
+  ): Promise<DetectedBarcode[]>;
+}
+
+interface BarcodeDetectorConstructor {
+  new (options?: BarcodeDetectorOptions): BarcodeDetector;
+}
+
 declare global {
   interface Window {
-    BarcodeDetector?: any;
+    BarcodeDetector?: BarcodeDetectorConstructor;
   }
 }
 
@@ -28,12 +65,43 @@ export default function Scan() {
   const [message, setMessage] = useState<string>('');
   const [manualCode, setManualCode] = useState<string>('');
   const scanTimerRef = useRef<number | null>(null);
-  const qrScannerRef = useRef<any>(null);
+  type QrScannerInstance = { start(): Promise<void>; stop(): void; destroy(): void };
+  const qrScannerRef = useRef<QrScannerInstance | null>(null);
 
   useEffect(() => {
     setSupported(!!window.BarcodeDetector);
-    return () => stopScan();
   }, []);
+
+  const stopScan = useCallback(() => {
+    setScanning(false);
+    if (scanTimerRef.current) {
+      window.clearInterval(scanTimerRef.current);
+      scanTimerRef.current = null;
+    }
+    if (stream) {
+      stream.getTracks().forEach((t) => t.stop());
+      setStream(null);
+    }
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.srcObject = null;
+    }
+    if (qrScannerRef.current) {
+      try {
+        qrScannerRef.current.stop();
+        qrScannerRef.current.destroy();
+      } catch {
+        void 0; // ignore cleanup errors
+      }
+      qrScannerRef.current = null;
+    }
+  }, [stream]);
+
+  useEffect(() => {
+    return () => {
+      stopScan();
+    };
+  }, [stopScan]);
 
   async function startScan() {
     try {
@@ -60,8 +128,8 @@ export default function Scan() {
               const value = codes[0].rawValue as string;
               handleResult(value);
             }
-          } catch (err) {
-            // ignore per-frame errors
+          } catch {
+            void 0; // ignore per-frame errors
           }
         };
         // Scan ~4x per second
@@ -75,7 +143,19 @@ export default function Scan() {
         return;
       }
 
-      const QrScanner = (await import('qr-scanner')).default as any;
+      type QrScannerConstructor = new (
+        video: HTMLVideoElement,
+        onDecode: (result: string) => void,
+        options?: {
+          preferredCamera?: 'environment' | 'user';
+          highlightScanRegion?: boolean;
+          highlightCodeOutline?: boolean;
+        }
+      ) => QrScannerInstance;
+      const QrScanner = (await import('qr-scanner')).default as unknown as QrScannerConstructor & {
+        WORKER_PATH: string;
+        scanImage: (image: Blob | File | HTMLImageElement) => Promise<string | null>;
+      };
       const workerPath = (await import('qr-scanner/qr-scanner-worker.min.js')).default as string;
       QrScanner.WORKER_PATH = workerPath;
 
@@ -96,43 +176,20 @@ export default function Scan() {
     }
   }
 
-  function stopScan() {
-    setScanning(false);
-    if (scanTimerRef.current) {
-      window.clearInterval(scanTimerRef.current);
-      scanTimerRef.current = null;
-    }
-    if (stream) {
-      stream.getTracks().forEach((t) => t.stop());
-      setStream(null);
-    }
-    if (videoRef.current) {
-      videoRef.current.pause();
-      videoRef.current.srcObject = null;
-    }
-    if (qrScannerRef.current) {
-      try {
-        qrScannerRef.current.stop();
-        qrScannerRef.current.destroy();
-      } catch (e) {
-        // ignore
-      }
-      qrScannerRef.current = null;
-    }
-  }
+  // stopScan moved to useCallback above
 
   function extractCodeFromValue(value: string): string | null {
     try {
       if (value.startsWith('http')) {
         const u = new URL(value);
-        const match = u.pathname.match(/\/product\/([^\/]+)/);
+        const match = u.pathname.match(/\/product\/([^/]+)/);
         return match ? match[1] : null;
       }
-      const match = value.match(/\/product\/([^\/]+)/);
+      const match = value.match(/\/product\/([^/]+)/);
       if (match && match[1]) return match[1];
       // Assume value itself is the unique_code
       return value;
-    } catch (e) {
+    } catch {
       return null;
     }
   }
@@ -177,7 +234,10 @@ export default function Scan() {
         };
         img.src = url;
       } else {
-        const QrScanner = (await import('qr-scanner')).default as any;
+        const QrScanner = (await import('qr-scanner')).default as unknown as {
+          WORKER_PATH: string;
+          scanImage: (image: Blob | File | HTMLImageElement) => Promise<string | null>;
+        };
         const workerPath = (await import('qr-scanner/qr-scanner-worker.min.js')).default as string;
         QrScanner.WORKER_PATH = workerPath;
         const result = await QrScanner.scanImage(file);

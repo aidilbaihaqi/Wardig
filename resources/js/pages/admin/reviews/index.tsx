@@ -35,11 +35,10 @@ import {
     MessageSquare,
     User,
     Calendar,
-    Package,
     Store,
     CheckSquare,
     XSquare,
-    MoreHorizontal
+    
 } from 'lucide-react';
 
 interface Review {

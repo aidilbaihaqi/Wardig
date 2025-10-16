@@ -13,14 +13,11 @@ import {
     Mail, 
     Store, 
     Package,
-    Calendar,
     User,
     Heart,
     Share2,
     ChevronLeft,
-    ChevronRight,
-    Play,
-    Pause
+    ChevronRight
 } from 'lucide-react';
 
 interface Product {
@@ -61,7 +58,6 @@ interface Props {
 
 export default function ProductShow({ product }: Props) {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const [isVideoPlaying, setIsVideoPlaying] = useState(false);
     const [showAllReviews, setShowAllReviews] = useState(false);
     const { data, setData, post, processing, errors, reset } = useForm({
         customer_name: '',
@@ -71,11 +67,13 @@ export default function ProductShow({ product }: Props) {
     });
 
     // Safeguards for possible snake_cased keys from Laravel JSON
-    const images = (product as any).images ?? [];
-    const approvedReviews = (product as any).approvedReviews ?? (product as any).approved_reviews ?? [];
+    type ProductCompat = Product & { approved_reviews?: Product['approvedReviews'] };
+    const compat = product as ProductCompat;
+    const images = compat.images ?? [];
+    const approvedReviews = compat.approvedReviews ?? compat.approved_reviews ?? [];
 
     const averageRating = approvedReviews.length > 0 
-        ? approvedReviews.reduce((sum: number, review: any) => sum + review.rating, 0) / approvedReviews.length 
+        ? approvedReviews.reduce((sum, review) => sum + review.rating, 0) / approvedReviews.length 
         : 0;
 
     const nextImage = () => {

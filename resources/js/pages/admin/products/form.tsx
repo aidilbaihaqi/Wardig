@@ -12,9 +12,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { 
     Upload, 
     X, 
-    Image as ImageIcon, 
     Video, 
-    Package,
     AlertCircle,
     Check,
     Star
@@ -52,7 +50,6 @@ interface Props {
 export default function ProductForm({ product, umkmProfiles }: Props) {
     const isEdit = !!product;
     const [imageFiles, setImageFiles] = useState<File[]>([]);
-    const [videoFile, setVideoFile] = useState<File | null>(null);
     const [imagePreviews, setImagePreviews] = useState<string[]>(
         product?.images.map(img => `/storage/${img.image_path}`) || []
     );
@@ -63,7 +60,7 @@ export default function ProductForm({ product, umkmProfiles }: Props) {
         product?.images.findIndex(img => img.is_primary) || 0
     );
 
-    const { data, setData, post, put, processing, errors, reset } = useForm({
+    const { data, setData, post, put, processing, errors } = useForm({
         name: product?.name || '',
         description: product?.description || '',
         price: product?.price || '',
@@ -121,7 +118,6 @@ export default function ProductForm({ product, umkmProfiles }: Props) {
             return;
         }
 
-        setVideoFile(file);
         setData('video', file);
 
         // Create preview
@@ -151,7 +147,6 @@ export default function ProductForm({ product, umkmProfiles }: Props) {
     };
 
     const removeVideo = () => {
-        setVideoFile(null);
         setVideoPreviews('');
         setData('video', null);
     };

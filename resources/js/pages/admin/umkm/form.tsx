@@ -36,7 +36,7 @@ export default function UmkmForm({ umkm, errors }: Props) {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const isEditing = !!umkm;
 
-    const { data, setData, post, put, processing, reset } = useForm({
+    const { data, setData, post, processing, reset } = useForm({
         name: umkm?.name || '',
         description: umkm?.description || '',
         address: umkm?.address || '',

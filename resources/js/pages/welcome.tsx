@@ -4,8 +4,6 @@ import { dashboard, login, register } from '@/routes';
 
 export default function Welcome({
     auth,
-    laravelVersion,
-    phpVersion,
 }: PageProps<{ laravelVersion: string; phpVersion: string }>) {
     return (
         <>

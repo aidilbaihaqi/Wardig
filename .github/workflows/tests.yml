@@ -38,7 +38,7 @@ jobs:
         run: php artisan key:generate
 
       - name: Run Tests (Pest)
-        run: ./vendor/bin/pest --colors --verbose --log-junit=storage/test-junit.xml
+        run: ./vendor/bin/pest --colors --log-junit=storage/test-junit.xml
 
       - name: Upload JUnit Report
         uses: actions/upload-artifact@v4
